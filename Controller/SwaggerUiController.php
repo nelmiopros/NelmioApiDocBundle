@@ -49,7 +49,7 @@ final class SwaggerUiController
         $this->twig = $twig;
     }
 
-    public function __invoke(Request $request, $area = 'default')
+    public function __invoke(Request $request, $area = 'default', $template = 'index')
     {
         if (!$this->generatorLocator->has($area)) {
             $advice = '';
@@ -66,7 +66,7 @@ final class SwaggerUiController
         }
 
         $response = new Response(
-            $this->twig->render('@NelmioApiDoc/SwaggerUi/index.html.twig', ['swagger_data' => ['spec' => $spec]]),
+            $this->twig->render("@NelmioApiDoc/SwaggerUi/$template.html.twig", ['swagger_data' => ['spec' => $spec]]),
             Response::HTTP_OK,
             ['Content-Type' => 'text/html']
         );
